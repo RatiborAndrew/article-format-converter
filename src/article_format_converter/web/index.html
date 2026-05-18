@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Конвертор научных статей</title>
+    <link rel="stylesheet" href="/static/styles.css" />
+  </head>
+  <body>
+    <header class="app-header">
+      <div>
+        <p class="eyebrow">MVP проверки оформления</p>
+        <h1>Конвертор научных статей</h1>
+      </div>
+      <label class="profile-select">
+        <span>Профиль журнала</span>
+        <select id="profileSelect" aria-label="Профиль журнала"></select>
+      </label>
+    </header>
+
+    <main class="workspace">
+      <section class="input-pane" aria-labelledby="inputTitle">
+        <div class="pane-head">
+          <div>
+            <h2 id="inputTitle">Исходная статья</h2>
+            <p>Вставьте текст или загрузите `.docx` для первичной проверки.</p>
+          </div>
+          <div class="segmented" role="tablist" aria-label="Режим ввода">
+            <button class="segment active" type="button" data-mode="text" role="tab" aria-selected="true">Текст</button>
+            <button class="segment" type="button" data-mode="file" role="tab" aria-selected="false">DOCX</button>
+          </div>
+        </div>
+
+        <form id="textForm" class="input-mode active">
+          <label for="articleText">Текст статьи</label>
+          <textarea
+            id="articleText"
+            name="articleText"
+            placeholder="УДК 2-1&#10;Название статьи&#10;Автор&#10;&#10;Аннотация: ..."
+          ></textarea>
+          <div class="actions">
+            <button class="primary" type="submit">Проверить текст</button>
+            <button class="secondary" type="button" id="sampleButton">Вставить пример</button>
+          </div>
+        </form>
+
+        <form id="fileForm" class="input-mode">
+          <label class="drop-zone" for="docxFile">
+            <span class="drop-title">Загрузите `.docx`</span>
+            <span class="drop-note">Файл будет обработан локальным backend без изменения исходника.</span>
+            <input id="docxFile" name="docxFile" type="file" accept=".docx" />
+          </label>
+          <div class="actions">
+            <button class="primary" type="submit">Проверить DOCX</button>
+          </div>
+        </form>
+
+        <p id="statusLine" class="status-line" aria-live="polite">Готов к проверке.</p>
+      </section>
+
+      <section class="report-pane" aria-labelledby="reportTitle">
+        <div class="pane-head">
+          <div>
+            <h2 id="reportTitle">Отчет</h2>
+            <p id="reportSummary">После проверки здесь появятся метрики и замечания.</p>
+          </div>
+          <button class="secondary" type="button" id="downloadReport" disabled>Скачать JSON</button>
+        </div>
+
+        <div class="metrics" id="metrics" aria-label="Метрики документа">
+          <div>
+            <span class="metric-value">0</span>
+            <span class="metric-label">знаков основного текста</span>
+          </div>
+          <div>
+            <span class="metric-value">0</span>
+            <span class="metric-label">слов в аннотации</span>
+          </div>
+          <div>
+            <span class="metric-value">0</span>
+            <span class="metric-label">ключевых слов</span>
+          </div>
+          <div>
+            <span class="metric-value">0</span>
+            <span class="metric-label">сносок</span>
+          </div>
+        </div>
+
+        <div class="filters" aria-label="Фильтр замечаний">
+          <button class="filter active" type="button" data-filter="all">Все</button>
+          <button class="filter" type="button" data-filter="critical">Критичные</button>
+          <button class="filter" type="button" data-filter="warning">Предупреждения</button>
+          <button class="filter" type="button" data-filter="recommendation">Рекомендации</button>
+        </div>
+
+        <div id="results" class="results empty">
+          <p>Пока нет данных для отчета.</p>
+        </div>
+      </section>
+    </main>
+
+    <script src="/static/app.js" defer></script>
+  </body>
+</html>

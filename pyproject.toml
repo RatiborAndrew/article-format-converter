@@ -20,6 +20,7 @@ web = [
   "uvicorn[standard]>=0.30"
 ]
 dev = [
+  "httpx>=0.28",
   "pytest>=8.0"
 ]
 
@@ -28,6 +29,9 @@ article-format-converter = "article_format_converter.cli:main"
 
 [tool.setuptools.packages.find]
 where = ["src"]
+
+[tool.setuptools.package-data]
+article_format_converter = ["web/*.html", "web/*.css", "web/*.js"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]

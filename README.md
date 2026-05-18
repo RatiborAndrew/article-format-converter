@@ -381,6 +381,51 @@ MVP должен:
 - Сравнить локальные модели по качеству и скорости.
 - Добавить локальный AI-режим для приватной обработки.
 
+## Текущее состояние разработки
+
+В репозитории создан первый технический слой:
+
+- Python-пакет `article_format_converter`;
+- профиль журнала `pravoslavny-teolog`;
+- эвристический парсер текстовой структуры статьи;
+- чтение текста и подстрочных сносок из `.docx` через OOXML;
+- rule engine для базовых структурных проверок;
+- CLI для локального анализа `.txt` и `.docx`;
+- FastAPI-модуль для будущего веб-приложения;
+- unit-тесты для парсера, правил и чтения `.docx`.
+
+### Локальный запуск проверок
+
+Без установки внешних зависимостей:
+
+```bash
+PYTHONPATH=src python3 -m unittest discover -s tests
+```
+
+Проверка файла через CLI:
+
+```bash
+PYTHONPATH=src python3 -m article_format_converter path/to/article.docx --pretty
+```
+
+### Запуск API
+
+Для веб-слоя нужны optional-зависимости:
+
+```bash
+python3 -m venv .venv
+source .venv/bin/activate
+pip install -e ".[web]"
+uvicorn article_format_converter.api:app --reload
+```
+
+После запуска будут доступны:
+
+- `GET /health`
+- `GET /profiles`
+- `POST /analyze-text`
+- `POST /analyze-docx`
+
 ## Критерии приемки MVP
 
 - Система принимает `.docx` со статьей и не изменяет исходник.
